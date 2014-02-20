@@ -1,0 +1,13 @@
+{
+  "name": "spider",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "closure-compiler": "http://dl.google.com/closure-compiler/compiler-latest.zip",
+    "closure-library": "https://closure-library.googlecode.com/files/closure-library-20130212-95c19e7f0f5f.zip",
+    "closure-templates": "http://closure-templates.googlecode.com/files/closure-templates-for-javascript-latest.zip",
+    "normalize-css": "git://github.com/necolas/normalize.css.git",
+    "stylus-nib": "git://github.com/visionmedia/nib.git",
+    "react": "~0.5.0"
+  }
+}

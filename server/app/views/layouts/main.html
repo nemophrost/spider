@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf=8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{title}}</title>
+    {{#isDev}}
+      <link rel="stylesheet" href="/client/app/css/app.css" />
+      <script src="/bower_components/closure-library/closure/goog/base.js"></script>
+      <script src="/client/deps.js"></script>
+      <script src="/client/app/js/main.js"></script>
+    {{/isDev}}
+    {{^isDev}}
+      <link rel="stylesheet" href="/client/app/build/app.css?v={{appVersion}}" />
+      <script src="/client/app/build/app.js?v={{appVersion}}"></script>
+    {{/isDev}}
+  </head>
+  <body>
+    {{{ yield }}}
+  </body>
+</html>
