@@ -16,6 +16,12 @@ spider.controllers.Viewport = function(appController) {
 
 	this.view = goog.dom.getElementByClass('viewport');
 
+	/**
+	 * @type {!Array.<Element>}
+	 * @private
+	 */
+	this._selection = [];
+
 	/** @private */
 	this._eventHandler = new goog.events.EventHandler(this);
 
@@ -24,11 +30,11 @@ spider.controllers.Viewport = function(appController) {
 
 	goog.events.listen(
 		this.view,
-    	[goog.events.EventType.TOUCHSTART, goog.events.EventType.MOUSEDOWN],
-    	this._pointerDown,
-    	false,
-    	this
-    );
+		[goog.events.EventType.TOUCHSTART, goog.events.EventType.MOUSEDOWN],
+		this._pointerDown,
+		false,
+		this
+	);
 };
 
 /**
@@ -37,10 +43,10 @@ spider.controllers.Viewport = function(appController) {
  * @private
  */
 spider.controllers.Viewport._HAS_SET_CAPTURE =
-    // IE and Gecko after 1.9.3 has setCapture
-    // WebKit does not yet: https://bugs.webkit.org/show_bug.cgi?id=27330
-    goog.userAgent.IE ||
-    goog.userAgent.GECKO && goog.userAgent.isVersion('1.9.3');
+	// IE and Gecko after 1.9.3 has setCapture
+	// WebKit does not yet: https://bugs.webkit.org/show_bug.cgi?id=27330
+	goog.userAgent.IE ||
+	goog.userAgent.GECKO && goog.userAgent.isVersion('1.9.3');
 
 /**
  * @param {goog.events.BrowserEvent} e
@@ -157,10 +163,34 @@ spider.controllers.Viewport.prototype._cleanUpAfterPointerUp = function() {
 
 
 /**
- * @return {Element}
+ * @return {!Element}
  */
 spider.controllers.Viewport.prototype.createElement = function() {
 	var ret = goog.dom.createElement(goog.dom.TagName.DIV);
 	goog.dom.appendChild(this.view, ret);
 	return ret;
+};
+
+/**
+ * @param {!Array.<Element>} selectedElements
+ */
+spider.controllers.Viewport.prototype.deselectAll = function() {
+	this._selection.forEach(function(el) {
+		el.style.boxShadow = '';
+	});
+
+	this._selection = [];
+};
+
+/**
+ * @param {!Array.<Element>} selectedElements
+ */
+spider.controllers.Viewport.prototype.setSelection = function(selectedElements) {
+	this.deselectAll();
+
+	this._selection = selectedElements;
+
+	this._selection.forEach(function(el) {
+		el.style.boxShadow = '0 0 3px 0 blue';
+	});
 };
