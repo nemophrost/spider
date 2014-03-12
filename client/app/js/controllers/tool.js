@@ -22,4 +22,10 @@ spider.controllers.Tool.prototype.pointerMove = function(e, coord) {};
  * @param {goog.events.BrowserEvent} e
  * @param {goog.math.Coordinate} coord
  */
+spider.controllers.Tool.prototype.pointerDrag = function(e, coord) {};
+
+/**
+ * @param {goog.events.BrowserEvent} e
+ * @param {goog.math.Coordinate} coord
+ */
 spider.controllers.Tool.prototype.pointerUp = function(e, coord) {};

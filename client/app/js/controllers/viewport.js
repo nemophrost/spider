@@ -35,6 +35,14 @@ spider.controllers.Viewport = function(appController) {
 		false,
 		this
 	);
+
+	goog.events.listen(
+		this.view,
+		[goog.events.EventType.TOUCHMOVE, goog.events.EventType.MOUSEMOVE],
+		this._pointerMove,
+		false,
+		this
+	);
 };
 
 /**
@@ -83,7 +91,19 @@ spider.controllers.Viewport.prototype._pointerDown = function(e) {
 spider.controllers.Viewport.prototype._pointerMove = function(e) {
 	this._lastPointerEvent = e;
 
-	this.appController.activeTool.pointerMove(e, this._eventToCoord(e));
+	if (this.appController.activeTool && this.appController.activeTool.handlesPointerMove) {
+		this.appController.activeTool.pointerMove(e, this._eventToCoord(e));
+	}
+};
+
+/**
+ * @param {goog.events.BrowserEvent} e
+ * @private
+ */
+spider.controllers.Viewport.prototype._pointerDrag = function(e) {
+	this._lastPointerEvent = e;
+
+	this.appController.activeTool.pointerDrag(e, this._eventToCoord(e));
 };
 
 /**
@@ -118,7 +138,7 @@ spider.controllers.Viewport.prototype._setupEventHandlers = function() {
 	this._eventHandler.listen(
 		doc,
 		[goog.events.EventType.TOUCHMOVE, goog.events.EventType.MOUSEMOVE],
-		this._pointerMove,
+		this._pointerDrag,
 		useCapture
 	);
 
@@ -162,6 +182,12 @@ spider.controllers.Viewport.prototype._cleanUpAfterPointerUp = function() {
 };
 
 
+/*******************************************************************************
+
+								PUBLIC INTERFACE
+
+*******************************************************************************/
+
 /**
  * @return {!Element}
  */
@@ -193,4 +219,27 @@ spider.controllers.Viewport.prototype.setSelection = function(selectedElements) 
 	this._selection.forEach(function(el) {
 		el.style.boxShadow = '0 0 3px 0 blue';
 	});
+};
+
+/**
+ * @return {!Array.<Element>} selectedElements
+ */
+spider.controllers.Viewport.prototype.selection = function() {
+	return goog.array.clone(this._selection);
+};
+
+/**
+ * @param {!Element} element
+ * @return {boolean}
+ */
+spider.controllers.Viewport.prototype.isSelectable = function(element) {
+	return this.view.contains(element) && element !== this.view;
+};
+
+/**
+ * @param {!Element} element
+ * @return {boolean}
+ */
+spider.controllers.Viewport.prototype.isSelected = function(element) {
+	return goog.array.contains(this._selection, element);
 };

@@ -1,9 +1,9 @@
 goog.provide('spider.controllers.BlockTool');
 
+goog.require('spider.controllers.Tool');
+
 goog.require('goog.dom.classes');
 goog.require('goog.style');
-
-goog.require('spider.controllers.Tool');
 
 /**
  * @param {spider.controllers.Viewport} viewportController
@@ -12,6 +12,8 @@ goog.require('spider.controllers.Tool');
  */
 spider.controllers.BlockTool = function(viewportController) {
 	this.viewportController = viewportController;
+
+	this.handlesPointerMove = false;
 
 	this.newBlockHelper = this.viewportController.createElement();
 	goog.style.showElement(this.newBlockHelper);
@@ -28,7 +30,12 @@ spider.controllers.BlockTool.prototype.pointerDown = function(e, coord) {
 /**
  * @inheritDoc
  */
-spider.controllers.BlockTool.prototype.pointerMove = function(e, coord) {
+spider.controllers.BlockTool.prototype.pointerMove = function(e, coord) {};
+
+/**
+ * @inheritDoc
+ */
+spider.controllers.BlockTool.prototype.pointerDrag = function(e, coord) {
 	if (!this.anchorCoord)
 		return;
 
