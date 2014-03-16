@@ -16,8 +16,8 @@ spider.controllers.BlockTool = function(viewportController) {
 	this.handlesPointerMove = false;
 
 	this.newBlockHelper = this.viewportController.createElement();
-	goog.style.showElement(this.newBlockHelper);
-	goog.dom.classes.set(this.newBlockHelper, 'new-block-helper');
+	goog.style.showElement(this.newBlockHelper.get());
+	goog.dom.classes.set(this.newBlockHelper.get(), 'new-block-helper');
 };
 
 /**
@@ -43,7 +43,7 @@ spider.controllers.BlockTool.prototype.pointerDrag = function(e, coord) {
 
 	if (!this.newBlock && goog.math.Coordinate.squaredDistance(this.anchorCoord, coord) >= 4) {
 		this.newBlock = this.viewportController.createElement();
-		goog.style.showElement(this.newBlockHelper, true);
+		goog.style.showElement(this.newBlockHelper.get(), true);
 	}
 
 	if (this.newBlock) {
@@ -60,7 +60,7 @@ spider.controllers.BlockTool.prototype.pointerDrag = function(e, coord) {
 		}
 
 		[this.newBlock, this.newBlockHelper].forEach(function(el) {
-			goog.style.setStyle(el, {
+			goog.style.setStyle(el.get(), {
 				'position': 'absolute',
 				'left': l + 'px',
 				'width': Math.abs(coord.x - this.anchorCoord.x) + 'px',
@@ -76,8 +76,8 @@ spider.controllers.BlockTool.prototype.pointerDrag = function(e, coord) {
  */
 spider.controllers.BlockTool.prototype.pointerUp = function(e, coord) {
 	if (this.newBlock) {
-		this.newBlock.style.background = 'red';
+		this.newBlock.get().style.background = 'red';
 		this.newBlock = null;
-		goog.style.showElement(this.newBlockHelper);
+		goog.style.showElement(this.newBlockHelper.get());
 	}
 };

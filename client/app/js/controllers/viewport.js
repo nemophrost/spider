@@ -1,5 +1,7 @@
 goog.provide('spider.controllers.Viewport');
 
+goog.require('spider.models.BlockElement');
+
 goog.require('goog.events');
 goog.require('goog.events.EventHandler');
 goog.require('goog.dom');
@@ -189,11 +191,11 @@ spider.controllers.Viewport.prototype._cleanUpAfterPointerUp = function() {
 *******************************************************************************/
 
 /**
- * @return {!Element}
+ * @return {!spider.models.Element}
  */
 spider.controllers.Viewport.prototype.createElement = function() {
-	var ret = goog.dom.createElement(goog.dom.TagName.DIV);
-	goog.dom.appendChild(this.view, ret);
+	var ret = new spider.models.BlockElement();
+	goog.dom.appendChild(this.view, ret.get());
 	return ret;
 };
 
